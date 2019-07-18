@@ -1,0 +1,8 @@
+ts=2019-07-18T14:32:46.021941Z lvl=info msg="Welcome to InfluxDB" log_id=0GiNqImG000 version=nightly commit=10bfc9156 build_date=2019-07-17T07:14:12Z
+ts=2019-07-18T14:32:46.034496Z lvl=info msg="Resources opened" log_id=0GiNqImG000 service=bolt path=/root/.influxdbv2/influxd.bolt
+ts=2019-07-18T14:32:46.090297Z lvl=info msg="Index opened" log_id=0GiNqImG000 service=storage-engine index=tsi partitions=8
+ts=2019-07-18T14:32:46.090732Z lvl=info msg="Reloaded WAL" log_id=0GiNqImG000 service=storage-engine path=/root/.influxdbv2/engine/wal duration=0.021ms
+ts=2019-07-18T14:32:46.090749Z lvl=info msg=Starting log_id=0GiNqImG000 service=storage-engine component=retention_enforcer check_interval=1h
+ts=2019-07-18T14:32:46.091092Z lvl=info msg="Starting query controller" log_id=0GiNqImG000 service=storage-reads concurrency_quota=10 memory_bytes_quota_per_query=9223372036854775807 queue_size=10
+ts=2019-07-18T14:32:46.373512Z lvl=info msg=Starting log_id=0GiNqImG000 service=telemetry interval=8h
+ts=2019-07-18T14:32:46.373567Z lvl=info msg=Listening log_id=0GiNqImG000 service=http transport=http addr=:9999 port=9999
