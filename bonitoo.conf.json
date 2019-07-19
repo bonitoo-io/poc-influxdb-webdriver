@@ -1,0 +1,26 @@
+{
+  "active": "development",
+  "default_user": {
+    "name": "admin",
+    "password": "changeit",
+    "orgname": "qa",
+    "bucketname": "qa"
+  },
+  "development" : {
+    "config_id" : "development",
+    "protocol": "http",
+    "host" : "localhost",
+    "port" : "9999",
+    "def_ctx": "/",
+    "headless": false,
+    "browser": "chrome"
+   },
+  "nightly" : {
+    "config_id": "nightly",
+    "host": "aws-somewhere",
+    "port": "9999",
+    "def_ctx": "/",
+    "headless": true,
+    "browser": "chrome"
+  }
+}
