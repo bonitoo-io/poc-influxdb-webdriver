@@ -12,6 +12,7 @@ class onboardingSteps extends baseSteps {
         super(driver)
         this.splashPage = new splashPage(driver)
         this.initialSetupPage = new initialSetupPage(driver)
+        this.readyPage = new readyPage(driver)
     }
 
     async open(){
@@ -52,8 +53,9 @@ class onboardingSteps extends baseSteps {
     }
 
     async clickStart(){
-        await this.splashPage.getStartButton().then( elem => {
-            elem.click()
+        await this.splashPage.getStartButton().then( async elem => {
+            await elem.click()
+            await this.splashPage.waitUntilElementCss('h3.wizard-step--title ')
         })
     }
 
@@ -66,16 +68,53 @@ class onboardingSteps extends baseSteps {
     }
 
     async verifyNavCrumbText(crumb, text){
-        await this.initialSetupPage.getCrumbStep(crumb).then( elem => {
-            elem.getText().then(eltxt => {
+        await this.initialSetupPage.getCrumbStep(crumb).then( async elem => {
+            await elem.getText().then(eltxt => {
                 expect(eltxt).to.include(text)
             })
         })
 
     }
 
+    async setInputFieldValue(field, value){
+        await this.initialSetupPage.getInputField(field).then( async elem => {
+            await elem.sendKeys(value)
+         //   await this.delay(3000)
+        })
+    }
 
+    async clickContinueButton(){
+        await this.initialSetupPage.getNextButton().then(async btn => {
+            await btn.click()
+            //await this.readyPage.waitToLoad()
+            await this.delay(500) // no wait implicit or explicit seems to work.  Always getting title for previous step
+        })
+    }
 
+    async verifySubtitle(){
+        await this.readyPage.getSubtitle().then( async subt => {
+            subt.getText().then( async subtxt => {
+                expect(subtxt).to.include('1 organization')
+                expect(subtxt).to.include('1 user')
+                expect(subtxt).to.include('1 bucket')
+            })
+        })
+    }
+
+    async verifyNavCrumbTextColor(crumb, color){
+        await this.initialSetupPage.getCrumbStep(crumb).then( async elem => {
+            await elem.getCssValue('color').then(async cssColor => {
+                await expect(cssColor).to.equal(color)
+            })
+        })
+    }
+
+    async clickQuickStartButton(){
+        await this.readyPage.getQuickStartButton().then(async btn =>{
+            await btn.click()
+     //       await this.delay(3000)
+        })
+    }
 }
 
 module.exports = onboardingSteps

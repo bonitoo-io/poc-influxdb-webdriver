@@ -16,20 +16,22 @@ let driver = new Builder()
 let driver = __wdriver
 let onbSteps = new onboardingSteps(driver)
 
-
 const delay = function(timeout){
     return new Promise((resolve) => {
         setTimeout(resolve, timeout)
     })
 }
 
+BeforeAll(async() => {
+    await flush()
+})
 
 Given(/^I open the Influx onboarding page$/, async () => {
 
     //await driver.get("http://" + __config.host + ":" + __config.port + "/" )
     await onbSteps.openBase()
 
-    await onbSteps.delay(3000)
+    //await onbSteps.delay(3000)
     //return 'pending';
 
 })
@@ -66,7 +68,7 @@ When(/^I click on Get Started$/, async () => {
     //await driver.findElement(By.css('[data-testid=onboarding-get-started]')).click()
     //return 'pending';
     await onbSteps.clickStart();
-    await onbSteps.delay(3000)
+    //await onbSteps.delay(3000)
 
 })
 
@@ -89,6 +91,53 @@ Then(/^the Initial Setup Page is loaded$/, async () => {
     //return 'pending';
 
 })
+
+When(/^enter a new user name "(.*?)"$/, async name => {
+    await onbSteps.setInputFieldValue('username', (name === 'DEFAULT') ? __defaultUser.name : name)
+    //return "pending";
+})
+
+When(/^enter a new password "(.*?)"$/, async password => {
+    await onbSteps.setInputFieldValue('password', (password === 'DEFAULT') ? __defaultUser.password : password)
+    //return "pending";
+})
+
+When(/^enter confirm the new password "(.*?)"$/, async password => {
+    await onbSteps.setInputFieldValue('password-chk', (password === 'DEFAULT') ? __defaultUser.password : password)
+    //return "pending";
+})
+
+When(/^enter enter a new organization name "(.*?)"$/, async orgname => {
+    await onbSteps.setInputFieldValue('orgname', (orgname === 'DEFAULT') ? __defaultUser.orgname : orgname)
+    //return "pending";
+})
+
+When(/^enter a new bucket name "(.*?)"$/, async bucketname => {
+    await onbSteps.setInputFieldValue('bucketname', (bucketname === 'DEFAULT') ? __defaultUser.bucketname : bucketname)
+    //return "pending";
+})
+
+When(/^click next from setup page$/, async () => {
+    await onbSteps.clickContinueButton()
+ //   return "pending";
+})
+
+Then(/^verify ready page$/, async () => {
+    await onbSteps.verifySubtitle()
+    await onbSteps.verifyNavCrumbText('complete', 'Complete')
+    await onbSteps.delay(1000)
+    //ideally following should be not an exact match but a general value match e.g. lighter than, darker than
+    await onbSteps.verifyNavCrumbTextColor('complete', 'rgba(246, 246, 248, 1)')
+    //return "pending";
+
+})
+
+When(/^click quick start button$/, async () => {
+    //await readyPage.clickQickStart()
+    await onbSteps.clickQuickStartButton()
+    //return 'pending'
+})
+
 
 AfterAll(async() => {
     await driver.close()

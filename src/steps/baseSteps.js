@@ -27,6 +27,20 @@ class baseSteps{
 
     async openBase(){
         await this.driver.get( `${__config.protocol}://${__config.host}:${__config.port}/`)
+        await this.driver.wait(function(driver = this.driver) {
+            return driver.executeScript('return document.readyState').then(function(readyState) {
+                return readyState === 'complete';
+            });
+        });
+
+    }
+
+    async waitForPageLoad(){
+        await this.driver.wait(function(driver = this.driver) {
+            return driver.executeScript('return document.readyState').then(function(readyState) {
+                return readyState === 'complete';
+            });
+        });
     }
 }
 
