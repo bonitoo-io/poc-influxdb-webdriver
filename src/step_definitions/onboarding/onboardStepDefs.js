@@ -22,8 +22,14 @@ const delay = function(timeout){
     })
 }
 
-BeforeAll(async() => {
+Before( async () => {
+   // console.log("DEBUG Before hook " )
+    await driver.sleep(1000) //since gets called after scenarios, need a short delay to avoid promise resolution issues
     await flush()
+})
+
+BeforeAll(async() => {
+   // console.log("DEBUG BeforeAll " )
 })
 
 Given(/^I open the Influx onboarding page$/, async () => {
@@ -138,6 +144,19 @@ When(/^click quick start button$/, async () => {
     //return 'pending'
 })
 
+When(/^click advanced button$/, async () => {
+   await onbSteps.clickAdvancedButton()
+})
+
+Then(/^Fail$/, async() => {
+    await onbSteps.failTest()
+})
+
+/*
+After(() => {
+    console.log("DEBUG After hook")
+})
+*/
 
 AfterAll(async() => {
     await driver.close()

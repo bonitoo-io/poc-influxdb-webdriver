@@ -6,7 +6,7 @@ global.__srcdir = __dirname + "/src"
 
 const { flush, config, defaultUser } = require(__srcdir + '/utils/InfluxUtils');
 
-var common = '--require "src/step_definitions/**/*.js" --require-module babel-core/register ';
+var common = '--require "src/step_definitions/**/*.js" --require hooks.js --require-module babel-core/register ';
 
 global.__config = config
 global.__defaultUser = defaultUser
@@ -21,6 +21,9 @@ if(__config.headless) {
         .forBrowser(__config.browser)
         .build()
 }
+
+__wdriver.manage().setTimeouts({implicit: 3000})
+
 
 module.exports = {
     'default': common + '--format summary --format json:report/cucumber_report.json',

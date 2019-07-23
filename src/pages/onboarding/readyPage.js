@@ -22,7 +22,12 @@ class readyPage extends basePage {
         return await this.driver.findElement(By.css(qStartButton))
     }
 
-    async waitToLoad(){
+    async getAdvancedButton(){
+        return await this.driver.findElement(By.css(advancedButton))
+    }
+
+
+    async isLoaded(){
         await super.isLoaded([{type:'css', selector:subtitle},
             {type:'css', selector:qStartButton},
             {type:'css', selector:advancedButton},

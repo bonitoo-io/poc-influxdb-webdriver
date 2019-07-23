@@ -4,6 +4,7 @@ const baseSteps = require(__srcdir + '/steps/baseSteps.js')
 const splashPage = require(__srcdir + '/pages/onboarding/splashPage.js')
 const initialSetupPage = require(__srcdir + '/pages/onboarding/initialSetupPage.js')
 const readyPage = require(__srcdir + '/pages/onboarding/readyPage.js')
+const influxPage = require(__srcdir + '/pages/influxPage.js')
 
 
 class onboardingSteps extends baseSteps {
@@ -13,6 +14,7 @@ class onboardingSteps extends baseSteps {
         this.splashPage = new splashPage(driver)
         this.initialSetupPage = new initialSetupPage(driver)
         this.readyPage = new readyPage(driver)
+        this.influxPage = new influxPage(driver)
     }
 
     async open(){
@@ -86,8 +88,8 @@ class onboardingSteps extends baseSteps {
     async clickContinueButton(){
         await this.initialSetupPage.getNextButton().then(async btn => {
             await btn.click()
-            //await this.readyPage.waitToLoad()
-            await this.delay(500) // no wait implicit or explicit seems to work.  Always getting title for previous step
+            await this.readyPage.isLoaded()
+            //await this.delay(1000) // no wait implicit or explicit seems to work.  Always getting title for previous step
         })
     }
 
@@ -112,9 +114,23 @@ class onboardingSteps extends baseSteps {
     async clickQuickStartButton(){
         await this.readyPage.getQuickStartButton().then(async btn =>{
             await btn.click()
-     //       await this.delay(3000)
+            await this.influxPage.isLoaded()
+            //await this.driver.sleep(1000) //for some reason if no wait here next page load throws error
         })
     }
+
+    async clickAdvancedButton(){
+        await this.readyPage.getAdvancedButton().then(async btn =>{
+            await btn.click()
+            await this.influxPage.isLoaded()
+            //await this.delay(3000)
+        })
+    }
+
+    async failTest(){
+        await expect(true).to.be.false
+    }
+
 }
 
 module.exports = onboardingSteps

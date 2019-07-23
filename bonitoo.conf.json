@@ -13,14 +13,17 @@
     "port" : "9999",
     "def_ctx": "/",
     "headless": false,
-    "browser": "chrome"
+    "browser": "chrome",
+    "screenshot_dir": "screenshots"
    },
   "nightly" : {
     "config_id": "nightly",
+    "protocol": "http",
     "host": "aws-somewhere",
     "port": "9999",
     "def_ctx": "/",
     "headless": true,
-    "browser": "chrome"
+    "browser": "chrome",
+    "screenshot_dir": "screenshots"
   }
 }
